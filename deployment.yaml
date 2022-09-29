@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rust-service
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rust-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rust-service
+    spec:
+      containers:
+      - name: rust-service
+        image: $registry:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+        env:
+          - name: DD_ENV
+            value: dev
+          - name: DD_SERVICE
+            value: rust-service
+          - name: DD_LOGS_INJECTION
+            value: "true"
+          - name: DD_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
