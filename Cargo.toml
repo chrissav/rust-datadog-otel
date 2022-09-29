@@ -1,0 +1,9 @@
+[package]
+name = "datadog"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+opentelemetry = { git = "https://github.com/open-telemetry/opentelemetry-rust" }
+opentelemetry-datadog = { git = "https://github.com/open-telemetry/opentelemetry-rust", features = ["reqwest-blocking-client"] }
